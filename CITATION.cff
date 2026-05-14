@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this module in your publication, please cite as below."
+type: software
+title: "9 Annotate"
+abstract: |
+  Implements scRNA-seq annotation methods in R 
+authors:
+  - family-names: "Emons"
+    given-names: "Martin"
+    email: "martin.emons@uzh.ch"
+date-released: "2026-05-14"
+version: "1.0.0"
+license: MIT
+url: "https://github.com/CHANGE_ME/9-annotate"
+repository-code: "https://github.com/CHANGE_ME/9-annotate"
+keywords:
+  - bioinformatics
+  - computational-biology
+  - benchmark
+  - omnibenchmark
+  - module
+references:
+  - title: "Original implementation"
+    authors:
+      - family-names: "Emons"
+        given-names: "Martin"
+    type: software
+    url: "https://github.com/CHANGE_ME/9-annotate"
