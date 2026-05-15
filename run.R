@@ -34,4 +34,26 @@ cat("clusters.tsv:", args$clusters_tsv, "\n")
 
 # TODO: Implement your module logic
 # Process the data using main function
-process_data(args)
+annotate_cells <- function(args){
+  require("SingleCellExperiment")
+  require("anndataR")
+  #load the dataset
+  sce <- read_h5ad(args$normalized_selected.h5, as = "SingleCellExperiment")
+  #load the reference - coded along the `singleR` vignettes
+  #https://www.bioconductor.org/packages/release/bioc/vignettes/SingleR/inst/doc/SingleR.html
+  require("celldex")
+  hpca.se <- HumanPrimaryCellAtlasData()
+  require("SingleR")
+  prediction <- SingleR(test = sce, ref = hpca.se, assay.type.test=1,
+    labels = hpca.se$label.main)
+
+  #adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
+  out <- file.path(args$output_dir, sprintf("%s_prediction_labels.tsv", args$name))
+  cat("output_file:", out, "\n")
+  fwrite(data.frame(cell_id = rownames(prediction$labels), prediction$labels), out, 
+         sep = "\t", quote = FALSE, row.names = FALSE)
+  cat(sprintf("  wrote: %s\n", out))
+}
+
+
+annotate_cells(args)
