@@ -23,6 +23,8 @@ parser$add_argument("--normalized_selected.h5", dest="normalized_selected_h5",
 parser$add_argument("--clusters.tsv", dest="clusters_tsv",
                    type="character", nargs="+", required=TRUE,
                    help="Input: clusters.tsv")
+parser$add_argument("--reference", dest="reference_type", 
+                    type="character", help="Input file")
 
 args <- parser$parse_args()
 
@@ -42,10 +44,14 @@ annotate_cells <- function(args){
   #load the reference - coded along the `singleR` vignettes
   #https://www.bioconductor.org/packages/release/bioc/vignettes/SingleR/inst/doc/SingleR.html
   require("celldex")
-  hpca.se <- HumanPrimaryCellAtlasData()
+  if(args$reference == "HumanPrimaryCellAtlasData"){
+    ref <- HumanPrimaryCellAtlasData()
+  }else if(args$reference == "BlueprintEncodeData"){
+    ref <- BlueprintEncodeData()
+  }
   require("SingleR")
-  prediction <- SingleR(test = sce, ref = hpca.se, assay.type.test=1,
-    labels = hpca.se$label.main)
+  prediction <- SingleR(test = sce, ref = ref, assay.type.test=1,
+    labels = ref$label.main)
 
   #adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
   out <- file.path(args$output_dir, sprintf("%s_prediction_labels.tsv", args$name))
