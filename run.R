@@ -17,9 +17,6 @@ parser$add_argument("--name", dest="name", type="character", required=TRUE,
 parser$add_argument("--normalized_selected.h5", dest="normalized_selected_h5",
                    type="character", nargs="+", required=TRUE,
                    help="Input: normalized_selected.h5")
-parser$add_argument("--clusters.tsv", dest="clusters_tsv",
-                   type="character", nargs="+", required=TRUE,
-                   help="Input: clusters.tsv")
 parser$add_argument("--reference", dest="reference_type", 
                     type="character", help="Input file")
 
@@ -33,8 +30,6 @@ cat("clusters.tsv:", args$clusters_tsv, "\n")
 # TODO: Implement your module logic
 # Process the data using main function
 annotate_cells <- function(args){
-  require("SingleCellExperiment")
-  require("anndataR")
   #load the expression Matrix - adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
   m <- TENxMatrix(args$normalized_selected_h5, group = "matrix")
   m <- as(m, "dgCMatrix") # read into memory
