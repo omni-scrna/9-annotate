@@ -1,0 +1,13 @@
+[workspace]
+authors = ["Martin Emons <you@example.com>"]
+channels = ["conda-forge", "bioconda"]
+name = "9-annotate"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+bioconductor-singler = ">=2.12.0,<3"
+r-base = ">=4.5.3,<4.6"
+bioconductor-rhdf5 = ">=2.54.1,<3"

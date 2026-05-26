@@ -14,9 +14,6 @@ parser$add_argument("--output_dir", dest="output_dir", type="character", require
 parser$add_argument("--name", dest="name", type="character", required=TRUE,
                    help="Module name/identifier")
 # Stage-specific inputs
-parser$add_argument("--pcas.tsv", dest="pcas_tsv",
-                   type="character", nargs="+", required=TRUE,
-                   help="Input: pcas.tsv")
 parser$add_argument("--normalized_selected.h5", dest="normalized_selected_h5",
                    type="character", nargs="+", required=TRUE,
                    help="Input: normalized_selected.h5")
@@ -30,7 +27,6 @@ args <- parser$parse_args()
 
 cat("Output directory:", args$output_dir, "\n")
 cat("Module name:", args$name, "\n")
-cat("pcas.tsv:", args$pcas_tsv, "\n")
 cat("normalized_selected.h5:", args$normalized_selected_h5, "\n")
 cat("clusters.tsv:", args$clusters_tsv, "\n")
 
@@ -39,8 +35,9 @@ cat("clusters.tsv:", args$clusters_tsv, "\n")
 annotate_cells <- function(args){
   require("SingleCellExperiment")
   require("anndataR")
-  #load the dataset
-  sce <- read_h5ad(args$normalized_selected.h5, as = "SingleCellExperiment")
+  #load the expression Matrix - adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
+  m <- TENxMatrix(args$normalized_selected_h5, group = "matrix")
+  m <- as(m, "dgCMatrix") # read into memory
   #load the reference - coded along the `singleR` vignettes
   #https://www.bioconductor.org/packages/release/bioc/vignettes/SingleR/inst/doc/SingleR.html
   require("celldex")
@@ -50,7 +47,7 @@ annotate_cells <- function(args){
     ref <- BlueprintEncodeData()
   }
   require("SingleR")
-  prediction <- SingleR(test = sce, ref = ref, assay.type.test=1,
+  prediction <- SingleR(test = m, ref = ref, assay.type.test=1,
     labels = ref$label.main)
 
   #adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
