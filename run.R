@@ -2,9 +2,6 @@
 
 library(argparse)
 
-# Source main functions
-source("src/main.R")
-
 # Parse command line arguments
 parser <- ArgumentParser(description="OmniBenchmark module")
 
