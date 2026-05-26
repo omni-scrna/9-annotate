@@ -46,7 +46,7 @@ annotate_cells <- function(args){
     labels = ref$label.main)
 
   #adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
-  out <- file.path(args$output_dir, sprintf("%s_prediction_labels.tsv", args$name))
+  out <- file.path(args$output_dir, paste0(args$name, "_annotations.tsv"))
   cat("output_file:", out, "\n")
   fwrite(data.frame(cell_id = rownames(prediction), prediction$labels), out, 
          sep = "\t", quote = FALSE, row.names = FALSE)
