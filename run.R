@@ -27,6 +27,8 @@ cat("clusters.tsv:", args$clusters_tsv, "\n")
 # TODO: Implement your module logic
 # Process the data using main function
 annotate_cells <- function(args){
+  require("HDF5Array")
+  require("Matrix")
   #load the expression Matrix - adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
   m <- TENxMatrix(args$normalized_selected_h5, group = "matrix")
   m <- as(m, "dgCMatrix") # read into memory
