@@ -29,18 +29,19 @@ cat("clusters.tsv:", args$clusters_tsv, "\n")
 annotate_cells <- function(args){
   require("HDF5Array")
   require("Matrix")
+  require("celldex") 
+  require("SingleR")
+  require("data.table")
   #load the expression Matrix - adapted from https://github.com/omni-scrna/scrapper/blob/main/pca.R
   m <- TENxMatrix(args$normalized_selected_h5, group = "matrix")
   m <- as(m, "dgCMatrix") # read into memory
   #load the reference - coded along the `singleR` vignettes
   #https://www.bioconductor.org/packages/release/bioc/vignettes/SingleR/inst/doc/SingleR.html
-  require("celldex")
   if(args$reference == "HumanPrimaryCellAtlasData"){
     ref <- HumanPrimaryCellAtlasData()
   }else if(args$reference == "BlueprintEncodeData"){
     ref <- BlueprintEncodeData()
   }
-  require("SingleR")
   prediction <- SingleR(test = m, ref = ref, assay.type.test=1,
     labels = ref$label.main)
 
