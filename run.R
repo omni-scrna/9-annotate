@@ -13,7 +13,7 @@ parser$add_argument("--name", dest="name", type="character", required=TRUE,
 # Stage-specific inputs
 parser$add_argument("--normalized_selected_h5", dest="normalized_selected_h5",
                    type="character", nargs="+", required=TRUE,
-                   help="Input: normalized_selected.h5")
+                   help="Input: normalized_selected_h5")
 parser$add_argument("--reference", dest="reference_type", 
                     type="character", help="Input file")
 
