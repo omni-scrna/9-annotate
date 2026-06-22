@@ -1,31 +1,24 @@
 #!/usr/bin/env Rscript
 
-library(argparse)
 
-# Parse command line arguments
-parser <- ArgumentParser(description="OmniBenchmark module")
+# arg parsing
+source("src/common/cli.R")
+p <- arg_parser("ANNO module")
+p <- add_base_args(p)                    # --output_dir, --name
+p <- add_stage_args(p, "ANNO")     # the stage I/O contract
+# your own method params — argparser directly (its add_argument requires `help`):
+p <- add_argument(p, "--number_selected", type = "integer", help = "number of PCs")
+args <- parse_args(p)                    # argparser's own parser
 
-# Required by OmniBenchmark
-parser$add_argument("--output_dir", dest="output_dir", type="character", required=TRUE,
-                   help="Output directory for results")
-parser$add_argument("--name", dest="name", type="character", required=TRUE,
-                   help="Module name/identifier")
-# Stage-specific inputs
-parser$add_argument("--normalized_selected_h5", dest="normalized_selected_h5",
-                   type="character", nargs="+", required=TRUE,
-                   help="Input: normalized_selected_h5")
-parser$add_argument("--reference", dest="reference_type", 
-                    type="character", help="Input file")
+# logging
+cat(sprintf("Full command: %s\n", paste(commandArgs(trailingOnly = FALSE), collapse = " ")))
+cat(sprintf("LOG: command line args\n----------------------------------\n"))
+for (i in 1:length(args)) {
+  cat(sprintf("  %s: %s\n", names(args)[i], args[[i]]))
+}
+cat(sprintf("----------------------------------\n"))
 
-args <- parser$parse_args()
 
-cat("Output directory:", args$output_dir, "\n")
-cat("Module name:", args$name, "\n")
-cat("normalized_selected_h5:", args$normalized_selected_h5, "\n")
-cat("clusters.tsv:", args$clusters_tsv, "\n")
-
-# TODO: Implement your module logic
-# Process the data using main function
 annotate_cells <- function(args){
   require("HDF5Array")
   require("Matrix")
