@@ -11,7 +11,7 @@ parser$add_argument("--output_dir", dest="output_dir", type="character", require
 parser$add_argument("--name", dest="name", type="character", required=TRUE,
                    help="Module name/identifier")
 # Stage-specific inputs
-parser$add_argument("--normalized_selected.h5", dest="normalized_selected_h5",
+parser$add_argument("--normalized_selected_h5", dest="normalized_selected_h5",
                    type="character", nargs="+", required=TRUE,
                    help="Input: normalized_selected.h5")
 parser$add_argument("--reference", dest="reference_type", 
@@ -21,7 +21,7 @@ args <- parser$parse_args()
 
 cat("Output directory:", args$output_dir, "\n")
 cat("Module name:", args$name, "\n")
-cat("normalized_selected.h5:", args$normalized_selected_h5, "\n")
+cat("normalized_selected_h5:", args$normalized_selected_h5, "\n")
 cat("clusters.tsv:", args$clusters_tsv, "\n")
 
 # TODO: Implement your module logic
