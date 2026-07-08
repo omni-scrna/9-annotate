@@ -28,6 +28,13 @@ Run the module:
 ./run.R
 ```
 
+### Output
+
+The output table contains the following columns:
+
+- `cell_id`: cell identifier.
+- `predicted_labels`: predicted cell label for each cell.
+
 ## Citation
 
 If you use this module in your research, please cite it using the information in `CITATION.cff`.
