@@ -1,7 +1,8 @@
 # OmniBenchmark Module Configuration
 
 entrypoints:
-  default: run.R
+  singler: singler.R
+  celltypist: celltypist.py
 
 # Pointed to shared CLI helper code
 templates:
